@@ -21,15 +21,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
       - uses: pnpm/action-setup@v4
         with:
           # Use the pnpm version pinned in package.json `packageManager` to avoid conflicts
           package_json_file: package.json
           run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-          cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm -w run fmt:check
       - run: pnpm -w run typecheck:tsgo
@@ -43,14 +43,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        with:
-          package_json_file: package.json
-          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
           cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+          run_install: false
       - run: pnpm install --frozen-lockfile
       - id: determine
         run: |
@@ -71,15 +71,15 @@ jobs:
         with:
           fetch-depth: 0
       - run: git config user.name "GitHubActions" && git config user.email "actions@github.com"
-      - uses: pnpm/action-setup@v4
-        with:
-          package_json_file: package.json
-          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
           cache: pnpm
           registry-url: https://registry.npmjs.org
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: package.json
+          run_install: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - name: Publish with Changesets
