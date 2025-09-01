@@ -19,8 +19,8 @@ Intended for ESM Node codebases as a strict, no‑emit baseline that you can ext
 
 Key options (as defined in this preset):
 
-- `target`: `ES2022`
-- `lib`: `["ES2024"]`
+- `target`: `ES2023`
+- `lib`: `["ES2023"]`
 - `module`: `ESNext`
 - `moduleResolution`: `Bundler`
 - `verbatimModuleSyntax`: `true`
@@ -32,8 +32,6 @@ Key options (as defined in this preset):
 - `resolvePackageJsonExports` / `resolvePackageJsonImports`: `true`
 - `skipLibCheck`: `true`
 - `noEmit`: `true`
-
-Note: The repo’s agreed baseline is Node 22 (ES2023). This preset currently uses `target: ES2022` with `lib: ES2024`; consumers are free to override these in their project if they need exact ES2023 alignment. We may align these defaults in a follow‑up.
 
 ### `node-library.json` → `@mikecbrant/tsconfig/node-library`
 
