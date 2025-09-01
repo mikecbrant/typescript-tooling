@@ -28,7 +28,6 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           # Use the pnpm version pinned in package.json `packageManager` to avoid conflicts
-          package_json_file: package.json
           run_install: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm -w run fmt:check
@@ -49,7 +48,6 @@ jobs:
           cache: pnpm
       - uses: pnpm/action-setup@v4
         with:
-          package_json_file: package.json
           run_install: false
       - run: pnpm install --frozen-lockfile
       - id: determine
@@ -78,7 +76,6 @@ jobs:
           registry-url: https://registry.npmjs.org
       - uses: pnpm/action-setup@v4
         with:
-          package_json_file: package.json
           run_install: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
