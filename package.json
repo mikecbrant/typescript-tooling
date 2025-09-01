@@ -1,0 +1,21 @@
+{
+  "name": "@mikecbrant/typescript-tooling",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "fmt": "prettier . --write --cache",
+    "fmt:check": "prettier . --check --debug-check",
+    "typecheck:tsgo": "node -e \"console.log('tsgo: no-op (no TS sources in this repo)')\"",
+    "build": "echo noop"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "@typescript/native-preview": "^7.0.0-dev.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  }
+}
