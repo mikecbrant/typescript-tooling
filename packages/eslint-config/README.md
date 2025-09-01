@@ -6,15 +6,13 @@ ESLint 9 flat config for ESM-only Node 22/24 projects.
 - ESM-only: no `.cjs`, no eslintrc format
 - CJS (`*.cjs`, `*.cts`) files are ignored by default
 
-## Install peers
+## Install
 
 ```bash
-pnpm add -D eslint@^9 eslint-config-xo-typescript@^8 \
-  @typescript-eslint/parser@^8 @typescript-eslint/eslint-plugin@^8 \
-  eslint-plugin-import eslint-import-resolver-typescript \
-  eslint-plugin-n eslint-plugin-promise eslint-plugin-unicorn \
-  eslint-plugin-sonarjs eslint-plugin-unused-imports
+pnpm add -D eslint @mikecbrant/eslint-config
 ```
+
+This shareable config brings along the necessary plugins/configs internally (XO + TypeScript, import resolver, SonarJS, unicorn, and unused-imports). Your project only needs `eslint` and this package.
 
 ## Usage
 

@@ -2,8 +2,6 @@ import xoTypeScript from "eslint-config-xo-typescript";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
-import nPlugin from "eslint-plugin-n";
-import promisePlugin from "eslint-plugin-promise";
 import unicornPlugin from "eslint-plugin-unicorn";
 import sonarjs from "eslint-plugin-sonarjs";
 import unusedImports from "eslint-plugin-unused-imports";
@@ -30,10 +28,7 @@ export default [
     plugins: {
       "@typescript-eslint": tsPlugin,
       import: importPlugin,
-      n: nPlugin,
-      promise: promisePlugin,
       unicorn: unicornPlugin,
-      sonarjs,
       "unused-imports": unusedImports,
     },
     languageOptions: {

@@ -1,5 +1,5 @@
 export default {
-  semi: true,
+  semi: false,
   useTabs: true,
   singleQuote: true,
   bracketSpacing: true,

@@ -3,20 +3,18 @@
   "version": "0.0.0",
   "type": "module",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.mjs"
   },
   "engines": {
     "node": ">=22 <25"
   },
-  "peerDependencies": {
+  "dependencies": {
     "eslint": "^9.0.0",
     "eslint-config-xo-typescript": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-import-resolver-typescript": "^3.6.0",
-    "eslint-plugin-n": "^17.0.0",
-    "eslint-plugin-promise": "^7.0.0",
     "eslint-plugin-unicorn": "^52.0.0",
     "eslint-plugin-sonarjs": "^3.0.2",
     "eslint-plugin-unused-imports": "^4.0.0"
@@ -25,7 +23,7 @@
     "access": "public"
   },
   "files": [
-    "index.js",
+    "index.mjs",
     "README.md"
   ]
 }

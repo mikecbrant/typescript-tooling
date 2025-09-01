@@ -1,6 +1,6 @@
 # @mikecbrant/prettier-config
 
-Prettier 3 config matching the Node 22+ baseline (tabs, semicolons, single quotes, trailing commas).
+Prettier 3 config matching the Node 22+ baseline (tabs, no semicolons, single quotes, trailing commas).
 
 ## Usage
 
