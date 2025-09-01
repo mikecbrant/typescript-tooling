@@ -1,0 +1,25 @@
+{
+  "name": "@mikecbrant/tsconfig",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./base": "./base.json",
+    "./node-library": "./node-library.json",
+    "./node-test": "./node-test.json"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "base.json",
+    "node-library.json",
+    "node-test.json",
+    "README.md"
+  ]
+}

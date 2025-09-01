@@ -1,0 +1,91 @@
+name: Test and Release
+
+on:
+  push:
+    branches:
+      - main
+      - "release/**"
+      - "prerelease/**"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22.x, 24.x]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -w run fmt:check
+      - run: pnpm -w run typecheck:tsgo
+
+  determine_release:
+    runs-on: ubuntu-latest
+    outputs:
+      is_prerelease: ${{ steps.determine.outputs.is_prerelease }}
+      is_release: ${{ steps.determine.outputs.is_release }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - id: determine
+        run: |
+          pnpm changeset status --output=changeset-status.json
+          PRE=$(jq -r '.preState.mode // ""' changeset-status.json)
+          rm -f changeset-status.json
+          echo "is_prerelease=$([[ $PRE = 'pre' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "is_release=$([[ $GITHUB_REF_NAME = 'main' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+  release:
+    needs: [test, determine_release]
+    if: needs.determine_release.outputs.is_release == 'true' || needs.determine_release.outputs.is_prerelease == 'true'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git config user.name "GitHubActions" && git config user.email "actions@github.com"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Publish with Changesets
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          pnpm changeset status
+          pnpm changeset version
+          pnpm changeset publish
+          git push --follow-tags --no-verify || true
