@@ -1,1 +1,1 @@
-export { default } from "./config.mjs";
+export { default } from './config.mjs'

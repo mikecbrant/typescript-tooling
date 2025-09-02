@@ -1,22 +1,22 @@
 {
-  "name": "@mikecbrant/prettier-config",
-  "version": "0.0.0",
-  "type": "module",
-  "exports": {
-    ".": "./index.mjs"
-  },
-  "engines": {
-    "node": ">=22 <25"
-  },
-  "peerDependencies": {
-    "prettier": "^3.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "index.mjs",
-    "config.mjs",
-    "README.md"
-  ]
+	"name": "@mikecbrant/prettier-config",
+	"version": "0.0.0",
+	"type": "module",
+	"exports": {
+		".": "./index.mjs"
+	},
+	"engines": {
+		"node": ">=22 <25"
+	},
+	"peerDependencies": {
+		"prettier": "^3.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"index.mjs",
+		"config.mjs",
+		"README.md"
+	]
 }

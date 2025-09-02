@@ -19,8 +19,8 @@ This shareable config brings along the necessary plugins/configs internally (XO 
 Create `eslint.config.js` in your repo root:
 
 ```js
-import config from "@mikecbrant/eslint-config";
-export default config;
+import config from '@mikecbrant/eslint-config'
+export default config
 ```
 
 Key strict rules (all error):
