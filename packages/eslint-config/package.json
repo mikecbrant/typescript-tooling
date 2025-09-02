@@ -3,7 +3,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"exports": {
-		".": "./index.mjs"
+		".": "./index.mjs",
+		"./eslint.config": "./eslint.config.mjs"
 	},
 	"engines": {
 		"node": ">=22 <25"
@@ -25,6 +26,7 @@
 	"files": [
 		"index.mjs",
 		"config.mjs",
+		"eslint.config.mjs",
 		"README.md"
 	]
 }

@@ -16,15 +16,7 @@ export default [
 	// Strict overlays and additional plugins
 	{
 		name: '@mikecbrant/eslint-config/strict-overrides',
-		files: [
-			'**/*.js',
-			'**/*.mjs',
-			'**/*.jsx',
-			'**/*.ts',
-			'**/*.mts',
-			'**/*.tsx',
-			'**/*.d.ts',
-		],
+		files: ['**/*.{js,mjs,jsx,ts,mts,tsx}'],
 		plugins: {
 			'@typescript-eslint': tsPlugin,
 			import: importPlugin,
@@ -32,7 +24,7 @@ export default [
 			'unused-imports': unusedImports,
 		},
 		languageOptions: {
-			ecmaVersion: 'latest',
+			ecmaVersion: 2023,
 			sourceType: 'module',
 			parser: tsParser,
 			parserOptions: {

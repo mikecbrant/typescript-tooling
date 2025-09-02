@@ -15,6 +15,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
     "@typescript/native-preview": "^7.0.0-dev.0",
+    "@mikecbrant/prettier-config": "workspace:*",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   }

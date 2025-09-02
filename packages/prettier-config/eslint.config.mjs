@@ -1,2 +1,2 @@
-// Delegate to the published sibling package to avoid cross-package relative imports.
-export { default } from '@mikecbrant/eslint-config'
+// Import the sibling package's local flat config via package subpath export to avoid filesystem paths.
+export { default } from '@mikecbrant/eslint-config/eslint.config'
