@@ -1,2 +1,2 @@
-// Reuse the local ESLint wrapper config so the `.mjs` files here lint cleanly.
-export { default } from '../eslint-config/eslint.config.mjs'
+// Delegate to the published sibling package to avoid cross-package relative imports.
+export { default } from '@mikecbrant/eslint-config'
