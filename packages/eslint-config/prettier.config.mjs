@@ -1,2 +1,2 @@
-// Delegate to the workspace prettier config package for local formatting.
-export { default } from '../prettier-config/config.mjs'
+// Delegate to the published Prettier config package by name to avoid cross-package relative paths.
+export { default } from '@mikecbrant/prettier-config'
