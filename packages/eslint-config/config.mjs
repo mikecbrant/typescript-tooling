@@ -13,10 +13,10 @@ export default [
 	// SonarJS recommended (flat)
 	sonarjs.configs.recommended,
 
-	// Strict overlays and additional plugins
+	// TypeScript-specific strict overrides
 	{
-		name: '@mikecbrant/eslint-config/strict-overrides',
-		files: ['**/*.{js,mjs,jsx,ts,mts,tsx}'],
+		name: '@mikecbrant/eslint-config/strict-overrides:ts',
+		files: ['**/*.{ts,tsx,mts}'],
 		plugins: {
 			'@typescript-eslint': tsPlugin,
 			import: importPlugin,
@@ -47,7 +47,7 @@ export default [
 			'max-depth': ['error', 3],
 			'max-params': ['error', 4],
 
-			// TS hygiene
+			// TS hygiene (TS-only)
 			'@typescript-eslint/consistent-type-imports': [
 				'error',
 				{ prefer: 'type-imports', fixStyle: 'inline-type-imports' },
@@ -67,6 +67,60 @@ export default [
 						'index',
 						'object',
 						'type',
+					],
+					alphabetize: { order: 'asc', caseInsensitive: true },
+					'newlines-between': 'always',
+				},
+			],
+			'unused-imports/no-unused-imports': 'error',
+
+			// Misc
+			'no-console': 'error',
+
+			// Tame a few unicorn defaults
+			'unicorn/prevent-abbreviations': 'off',
+			'unicorn/no-null': 'off',
+		},
+	},
+
+	// JavaScript-specific strict overrides (no TS parser)
+	{
+		name: '@mikecbrant/eslint-config/strict-overrides:js',
+		files: ['**/*.{js,mjs,jsx}'],
+		plugins: {
+			import: importPlugin,
+			unicorn: unicornPlugin,
+			'unused-imports': unusedImports,
+		},
+		languageOptions: {
+			ecmaVersion: 2023,
+			sourceType: 'module',
+			parserOptions: {
+				ecmaFeatures: { jsx: true },
+			},
+		},
+		rules: {
+			// Confirmed strict thresholds (errors)
+			'max-lines-per-function': [
+				'error',
+				{ max: 60, skipComments: true, skipBlankLines: true },
+			],
+			complexity: ['error', 10],
+			'max-depth': ['error', 3],
+			'max-params': ['error', 4],
+
+			// Imports hygiene & sorting (no TS type group here)
+			'import/no-duplicates': 'error',
+			'import/order': [
+				'error',
+				{
+					groups: [
+						['builtin', 'external'],
+						'internal',
+						'parent',
+						'sibling',
+						'index',
+						'object',
 					],
 					alphabetize: { order: 'asc', caseInsensitive: true },
 					'newlines-between': 'always',
