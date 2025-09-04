@@ -3,9 +3,9 @@ name: CI — test → gate → release
 on:
   push:
     branches:
-      - '**'
+      - "**"
     tags:
-      - '**'
+      - "**"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
@@ -87,7 +87,7 @@ jobs:
   release:
     name: Release
     needs: [test, determine_release]
-    if: needs.determine_release.outputs.is_release == 'true' || needs.determine_release.outputs.is_prerelease == 'true'
+    if: ${{ github.event_name == 'push' && (needs.determine_release.outputs.is_release == 'true' || needs.determine_release.outputs.is_prerelease == 'true') }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -112,6 +112,7 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
           registry-url: https://registry.npmjs.org
+          always-auth: true
         env:
           # Ensure the registry is authenticated for publish
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -127,4 +128,4 @@ jobs:
           pnpm changeset status
           pnpm changeset version
           pnpm changeset publish
-          git push --follow-tags --no-verify || true
+          git push --follow-tags --no-verify
