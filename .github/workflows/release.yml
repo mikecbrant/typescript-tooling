@@ -1,56 +1,82 @@
-name: Test and Release
+name: CI — test → gate → release
 
 on:
   push:
     branches:
-      - main
-      - "release/**"
-      - "prerelease/**"
+      - '**'
+    tags:
+      - '**'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+# Ensure only one workflow per ref is active at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Default, least-privilege token permissions; jobs elevate as needed
+permissions:
+  contents: read
 
 jobs:
   test:
-    name: Test (Node ${{ matrix.node }})
+    name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        node: [22.x, 24.x]
+        node-version: [22.x, 24.x]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      # Install pnpm before any pnpm command; mirrors appsyncjs
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: ${{ matrix.node }}
-          cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          # Use the pnpm version pinned in package.json `packageManager` to avoid conflicts
+          version: latest
           run_install: false
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm -w run fmt:check
-      - run: pnpm -w run typecheck:tsgo
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Format check
+        run: pnpm -w run fmt:check
+      - name: Typecheck (tsgo)
+        run: pnpm -w run typecheck:tsgo
 
   determine_release:
+    name: Determine release
+    needs: [test]
     runs-on: ubuntu-latest
     outputs:
       is_prerelease: ${{ steps.determine.outputs.is_prerelease }}
       is_release: ${{ steps.determine.outputs.is_release }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
         with:
           node-version: 24.x
           cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-      - run: pnpm install --frozen-lockfile
-      - id: determine
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Compute release flags
+        id: determine
         run: |
           pnpm changeset status --output=changeset-status.json
           PRE=$(jq -r '.preState.mode // ""' changeset-status.json)
@@ -59,28 +85,43 @@ jobs:
           echo "is_release=$([[ $GITHUB_REF_NAME = 'main' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   release:
+    name: Release
     needs: [test, determine_release]
     if: needs.determine_release.outputs.is_release == 'true' || needs.determine_release.outputs.is_prerelease == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - run: git config user.name "GitHubActions" && git config user.email "actions@github.com"
-      - uses: actions/setup-node@v4
+      - name: Configure Git author (for tag/commit)
+        run: |
+          git config user.name "GitHubActions"
+          git config user.email "actions@github.com"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - name: Setup Node.js 24 (with npm registry)
+        uses: actions/setup-node@v4
         with:
           node-version: 24.x
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
           registry-url: https://registry.npmjs.org
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+        env:
+          # Ensure the registry is authenticated for publish
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
       - name: Publish with Changesets
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           pnpm changeset status
