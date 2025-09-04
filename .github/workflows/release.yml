@@ -78,7 +78,8 @@ jobs:
       - name: Compute release flags
         id: determine
         run: |
-          pnpm changeset status --output=changeset-status.json
+          # Changesets can error on PR merge refs; tolerate and default to no pre mode
+          pnpm changeset status --output=changeset-status.json || echo '{}' > changeset-status.json
           PRE=$(jq -r '.preState.mode // ""' changeset-status.json)
           rm -f changeset-status.json
           echo "is_prerelease=$([[ $PRE = 'pre' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
