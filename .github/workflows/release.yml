@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ssh-key: ${{ secrets.GHA_DEPLOY_KEY }}
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -97,6 +96,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.GHA_DEPLOY_KEY }}
       - name: Configure Git author (for tag/commit)
         run: |
           git config user.name "GitHubActions"
