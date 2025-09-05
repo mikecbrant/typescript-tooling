@@ -5,7 +5,7 @@ import unusedImports from 'eslint-plugin-unused-imports'
 
 export default [
 	{
-		files: ['*.mjs'],
+		files: ['**/*.mjs'],
 		languageOptions: {
 			ecmaVersion: 2023,
 			sourceType: 'module',

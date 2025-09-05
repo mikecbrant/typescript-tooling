@@ -28,6 +28,10 @@
 	"files": [
 		"index.mjs",
 		"config.mjs",
+		"eslint.config.mjs",
 		"README.md"
-	]
+	],
+	"devDependencies": {
+		"@mikecbrant/prettier-config": "workspace:*"
+	}
 }

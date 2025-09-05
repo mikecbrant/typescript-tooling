@@ -18,5 +18,8 @@
 		"index.mjs",
 		"config.mjs",
 		"README.md"
-	]
+	],
+	"devDependencies": {
+		"@mikecbrant/eslint-config": "workspace:*"
+	}
 }
