@@ -19,6 +19,9 @@
 		"eslint-plugin-sonarjs": "^3.0.2",
 		"eslint-plugin-unused-imports": "^4.0.0"
 	},
+	"devDependencies": {
+		"@mikecbrant/prettier-config": "workspace:*"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
