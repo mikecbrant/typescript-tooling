@@ -22,16 +22,16 @@
 	},
 	"devDependencies": {
 		"@mikecbrant/prettier-config": "workspace:*",
-		"eslint": "9.34.0",
-		"eslint-config-xo-typescript": "8.0.2",
-		"@typescript-eslint/parser": "8.41.0",
-		"@typescript-eslint/eslint-plugin": "8.41.0",
-		"eslint-plugin-import": "2.32.0",
-		"eslint-import-resolver-typescript": "3.10.1",
-		"eslint-plugin-unicorn": "52.0.0",
-		"eslint-plugin-sonarjs": "3.0.5",
-		"eslint-plugin-unused-imports": "4.2.0",
-		"typescript": "5.9.2"
+		"eslint": "^9.34.0",
+		"eslint-config-xo-typescript": "^8.0.2",
+		"@typescript-eslint/parser": "^8.41.0",
+		"@typescript-eslint/eslint-plugin": "^8.41.0",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-import-resolver-typescript": "^3.10.1",
+		"eslint-plugin-unicorn": "^52.0.0",
+		"eslint-plugin-sonarjs": "^3.0.5",
+		"eslint-plugin-unused-imports": "^4.2.0",
+		"typescript": "^5.9.2"
 	},
 	"publishConfig": {
 		"access": "public"
