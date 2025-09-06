@@ -26,36 +26,39 @@ importers:
   packages/eslint-config:
     dependencies:
       "@typescript-eslint/eslint-plugin":
-        specifier: ^8.0.0
+        specifier: ^8.41.0
         version: 8.41.0(@typescript-eslint/parser@8.41.0(eslint@9.34.0)(typescript@5.9.2))(eslint@9.34.0)(typescript@5.9.2)
       "@typescript-eslint/parser":
-        specifier: ^8.0.0
+        specifier: ^8.41.0
         version: 8.41.0(eslint@9.34.0)(typescript@5.9.2)
-      eslint:
-        specifier: ^9.0.0
-        version: 9.34.0
       eslint-config-xo-typescript:
-        specifier: ^8.0.0
+        specifier: ^8.0.2
         version: 8.0.2(eslint@9.34.0)(typescript@5.9.2)
       eslint-import-resolver-typescript:
-        specifier: ^3.6.0
+        specifier: ^3.10.1
         version: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.34.0)
       eslint-plugin-import:
-        specifier: ^2.29.0
+        specifier: ^2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.41.0(eslint@9.34.0)(typescript@5.9.2))(eslint-import-resolver-typescript@3.10.1)(eslint@9.34.0)
       eslint-plugin-sonarjs:
-        specifier: ^3.0.2
+        specifier: ^3.0.5
         version: 3.0.5(eslint@9.34.0)
       eslint-plugin-unicorn:
         specifier: ^52.0.0
         version: 52.0.0(eslint@9.34.0)
       eslint-plugin-unused-imports:
-        specifier: ^4.0.0
+        specifier: ^4.2.0
         version: 4.2.0(@typescript-eslint/eslint-plugin@8.41.0(@typescript-eslint/parser@8.41.0(eslint@9.34.0)(typescript@5.9.2))(eslint@9.34.0)(typescript@5.9.2))(eslint@9.34.0)
     devDependencies:
       "@mikecbrant/prettier-config":
         specifier: workspace:*
         version: link:../prettier-config
+      eslint:
+        specifier: ^9.34.0
+        version: 9.34.0
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
 
   packages/prettier-config:
     dependencies:
